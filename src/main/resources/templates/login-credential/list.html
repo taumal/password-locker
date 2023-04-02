@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Credentials</title>
+</head>
+<body>
+<h1>Credentials</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Username</th>
+    <th>Password</th>
+    <th>URL</th>
+    <th>Notes</th>
+    <th>Category</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="credential : ${credentials}">
+    <td th:text="${credential.name}"></td>
+    <td th:text="${credential.username}"></td>
+    <td th:text="${credential.password}"></td>
+    <td th:text="${credential.url}"></td>
+    <td th:text="${credential.notes}"></td>
+    <td th:text="${credential.folder.name}"></td>
+    <td>
+      <a th:href="@{/login/credentials/edit/{id}(id=${credential.id})}">Edit</a>
+      <form th:action="@{/login/credentials/delete/{id}(id=${credential.id})}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

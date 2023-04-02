@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create/Edit Category</title>
+</head>
+<body>
+<h1>Create/Edit Category</h1>
+<form th:object="${folder}" method="post">
+  <label>Folder Name</label>
+  <input type="text" name="name" th:value="${folder.name}" required />
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Credential</title>
+</head>
+<body>
+<h2>Add Credential</h2>
+<form th:action="@{/login/credentials}" method="post">
+  <input type="hidden" name="id" th:value="${credential.id}" />
+  <label>Name</label>
+  <input type="text" name="name" required />
+
+  <label>Username</label>
+  <input type="text" name="username" required />
+
+  <label>Password</label>
+  <input type="text" name="password" required />
+
+  <label>URL</label>
+  <input type="text" name="url" required />
+
+  <label>Notes</label>
+  <input type="text" name="notes" />
+
+  <label>Folder</label>
+  <select name="folder.id" required>
+    <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
+  </select>
+
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>
