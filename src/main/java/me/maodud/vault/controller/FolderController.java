@@ -3,9 +3,11 @@ package me.maodud.vault.controller;
 import lombok.RequiredArgsConstructor;
 import me.maodud.vault.model.Folder;
 import me.maodud.vault.service.FolderService;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -17,8 +17,8 @@ public class LoginCredentialService {
     private final FolderRepository folderRepository;
 
     public LoginCredential createCredential(LoginCredential credential, Long folderId) {
-        Folder category = folderRepository.findById(folderId).orElseThrow(() -> new ResourceNotFoundException("Folder not found"));
-        credential.setFolder(category);
+        Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new ResourceNotFoundException("Folder not found"));
+        credential.setFolder(folder);
         return repository.save(credential);
     }
 

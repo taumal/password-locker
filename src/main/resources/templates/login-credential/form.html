@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Credential</title>
@@ -24,7 +24,8 @@
   <input type="text" name="notes" />
 
   <label>Folder</label>
-  <select name="folder.id" required>
+  <select name="folder.id">
+    <option value="">-Please Select-</option>
     <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
   </select>
 
