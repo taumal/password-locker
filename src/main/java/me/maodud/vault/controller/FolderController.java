@@ -5,6 +5,7 @@ import me.maodud.vault.model.Folder;
 import me.maodud.vault.service.FolderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,19 +26,28 @@ public class FolderController {
     @GetMapping("/new")
     public String newFolder(Model model) {
         model.addAttribute("folder", new Folder());
-        return "folder/form";
+        return "folder/new-form";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit/{id}")
     public String editFolder(@PathVariable("id") Long id, Model model) {
-        Folder category = folderService.getFolderById(id);
-        model.addAttribute("category", category);
-        return "folder/form";
+        Folder folder = folderService.getFolderById(id);
+        model.addAttribute("folder", folder);
+        return "folder/new-form";
     }
 
     @PostMapping("")
-    public String saveFolder(@ModelAttribute("folder") Folder folder) {
-        folderService.saveFolder(folder);
+    public String saveFolder(Folder folder, BindingResult result) {
+        try {
+            if (!result.hasErrors()) {
+                folderService.saveFolder(folder);
+                System.out.println("created");
+            } else {
+                System.out.println("not created");
+            }
+        } catch (Exception e) {
+            System.out.println("not created. cause: " + e.getMessage());
+        }
         return "redirect:/folders";
     }
 

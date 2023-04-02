@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="folder : ${folderList}">
+        <td th:text="${folder.name}"></td>
+        <td>
+            <a th:href="@{/folders/edit/{id}(id=${folder.id})}">Edit</a>
+            <form th:action="@{/folders/{id}(id=${folder.id})}" method="post">
+                <input type="hidden" name="_method" value="DELETE" />
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

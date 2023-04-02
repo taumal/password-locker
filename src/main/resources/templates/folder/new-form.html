@@ -6,9 +6,10 @@
 </head>
 <body>
 <h1>Create/Edit Category</h1>
-<form th:object="${folder}" method="post">
+<form th:object="${folder}" th:action="@{/folders}" method="post">
   <label>Folder Name</label>
-  <input type="text" name="name" th:value="${folder.name}" required />
+  <input th:type="hidden" th:field="*{id}" th:if="*{id != null}">
+  <input type="text" th:field="*{name}" required />
   <button type="submit">Save</button>
 </form>
 </body>
