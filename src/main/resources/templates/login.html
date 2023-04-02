@@ -2,19 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Login Page</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
 </head>
 <body>
-<h2>Login Page</h2>
-<form th:action="@{/login}" method="post">
-  <div>
-    <label>Email:</label>
-    <input type="email" name="username" required />
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" name="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Master Password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-body-secondary">
+          Dont have a vault? <a th:href="@{/register}" class="card-link">Create Account</a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <label>Password:</label>
-    <input type="password" name="password" required />
-  </div>
-  <button type="submit">Login</button>
-</form>
+</div>
 </body>
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 </html>

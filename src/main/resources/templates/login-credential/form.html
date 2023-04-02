@@ -25,7 +25,6 @@
 
   <label>Folder</label>
   <select name="folder.id">
-    <option value="">-Please Select-</option>
     <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
   </select>
 

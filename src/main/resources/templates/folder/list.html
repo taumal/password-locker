@@ -2,28 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Folders</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
 </head>
-<body>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="folder : ${folderList}">
-        <td th:text="${folder.name}"></td>
-        <td>
-            <a th:href="@{/folders/edit/{id}(id=${folder.id})}">Edit</a>
-            <form th:action="@{/folders/{id}(id=${folder.id})}" method="post">
-                <input type="hidden" name="_method" value="DELETE" />
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<body class="bg-body-tertiary">
+
+<div class="container">
+    <main>
+
+        <div class="row">
+            <div class="col-md-5 col-lg-4">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="folder : ${folderList}">
+                        <td th:text="${folder.name}"></td>
+                        <td class="d-md-flex justify-content-md-end">
+                            <a class="btn btn-primary btn-sm me-2" th:href="@{/folders/edit/{id}(id=${folder.id})}">Edit</a>
+                            <form th:action="@{/folders/{id}(id=${folder.id})}" method="post">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
 </body>
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 </html>

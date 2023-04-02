@@ -2,39 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Credentials</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
 </head>
-<body>
-<h1>Credentials</h1>
+<body class="bg-body-tertiary">
 
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Username</th>
-    <th>Password</th>
-    <th>URL</th>
-    <th>Notes</th>
-    <th>Category</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="credential : ${credentials}">
-    <td th:text="${credential.name}"></td>
-    <td th:text="${credential.username}"></td>
-    <td th:text="${credential.password}"></td>
-    <td th:text="${credential.url}"></td>
-    <td th:text="${credential.notes}"></td>
-    <td th:text="${credential.folder.name}"></td>
-    <td>
-      <a th:href="@{/login/credentials/edit/{id}(id=${credential.id})}">Edit</a>
-      <form th:action="@{/login/credentials/delete/{id}(id=${credential.id})}" method="post">
-        <input type="hidden" name="_method" value="DELETE" />
-        <button type="submit">Delete</button>
-      </form>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="container">
+  <main>
+    <div class="row">
+      <div class="col-md-8 col-lg-6">
+        <table class="table table-hover">
+          <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>URL</th>
+            <th>Notes</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="credential : ${credentials}">
+            <td th:text="${credential.name}"></td>
+            <td th:text="${credential.username}"></td>
+            <td th:text="${credential.password}"></td>
+            <td th:text="${credential.url}"></td>
+            <td th:text="${credential.notes}"></td>
+            <td th:text="${credential.folder.name}"></td>
+            <td class="d-md-flex justify-content-md-end">
+              <a class="btn btn-primary btn-sm me-2" th:href="@{/login/credentials/edit/{id}(id=${credential.id})}">Edit</a>
+              <form th:action="@{/login/credentials/delete/{id}(id=${credential.id})}" method="post">
+                <input type="hidden" name="_method" value="DELETE" />
+                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
 </body>
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 </html>
