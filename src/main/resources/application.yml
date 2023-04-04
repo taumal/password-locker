@@ -13,3 +13,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  devtools:
+    restart:
+      enabled: true
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/,file:src/main/resources/templates/
