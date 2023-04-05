@@ -47,7 +47,7 @@ public class LoginCredentialController {
         } catch (Exception e) {
             System.out.println("not created. cause: " + e.getMessage());
         }
-        return "redirect:/login/credentials";
+        return "redirect:/";
     }
 
 }
