@@ -1,6 +1,7 @@
 package me.maodud.vault.service;
 
 import lombok.RequiredArgsConstructor;
+import me.maodud.vault.enums.Type;
 import me.maodud.vault.exception.ResourceNotFoundException;
 import me.maodud.vault.model.Folder;
 import me.maodud.vault.model.LoginCredential;
@@ -43,6 +44,10 @@ public class LoginCredentialService {
     public void deleteCredential(Long id) {
         LoginCredential credential = getCredentialById(id);
         repository.delete(credential);
+    }
+
+    public List<LoginCredential> getCredentialsByType(Type type) {
+        return repository.findByType(type);
     }
 
     public List<LoginCredential> getCredentialsByFolderId(Long folderId) {

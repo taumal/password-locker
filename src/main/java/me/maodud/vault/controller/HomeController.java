@@ -1,6 +1,7 @@
 package me.maodud.vault.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.maodud.vault.enums.Type;
 import me.maodud.vault.service.FolderService;
 import me.maodud.vault.service.LoginCredentialService;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ public class HomeController {
     public String getFolders(Model model) {
         model.addAttribute("credentials", credentialService.getAllCredentials());
         model.addAttribute("folders", folderService.getAllFolderList());
+        model.addAttribute("typeMap", Type.getTypeMap());
         return "welcome";
     }
 }

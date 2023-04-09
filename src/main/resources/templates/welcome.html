@@ -6,9 +6,9 @@
     <title>My Vaults</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
     <link th:href="@{/css/checkout.css}" rel="stylesheet" >
+    <link th:href="@{/css/sidebars.css}" rel="stylesheet" >
     <link th:href="@{/css/brand.css}" rel="stylesheet" >
 </head>
-<body>
 <body class="bg-body-tertiary">
 
 <div class="container">
@@ -17,12 +17,13 @@
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+                        <img th:src="@{/img/logo_bg_white.png}" alt="mdo" width="40" height="42" class="bi me-2">
+                        <!--<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>-->
                     </a>
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="#" class="nav-link px-2 link-secondary">Vaults</a></li>
-                        <li><a href="#" class="nav-link px-2 link-body-emphasis">Tools</a></li>
+                        <li><a href="#" class="nav-link px-2 link-secondary" th:href="@{/login/credentials}">Shields</a></li>
+                        <li><a href="#" class="nav-link px-2 link-body-emphasis" th:href="@{/tools}">Tools</a></li>
                     </ul>
 
                     <div class="dropdown text-end">
@@ -31,7 +32,7 @@
                         </a>
                         <ul class="dropdown-menu text-small">
                             <li><a class="dropdown-item" href="#" th:text="${#authentication.getPrincipal().getUsername()}">New project...</a></li>
-<!--                            <li><a class="dropdown-item" href="#">Settings</a></li>-->
+                            <!--<li><a class="dropdown-item" href="#" >Settings</a></li>-->
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" th:href="@{/sign-out}">Sign out</a></li>
                         </ul>
@@ -47,15 +48,58 @@
                         <h5 class="text-uppercase">My Passwords</h5>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <ul class="list-unstyled ps-0">
+                            <li class="mb-1">
+                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#vault-collapse" aria-expanded="true">
+                                    All Shields
+                                </button>
+                                <div class="collapse show" id="vault-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" th:href="@{/login/credentials}">My Shields</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="border-top my-3"></li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#types-collapse" aria-expanded="true">
+                                    Type
+                                </button>
+                                <div class="collapse show" id="types-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                               th:href="@{/login/credentials/types(type=${T(me.maodud.vault.enums.Type).LOGIN.name()})}"
+                                               th:text="${#strings.capitalize(#strings.toLowerCase(T(me.maodud.vault.enums.Type).LOGIN))}">Login</a>
+                                        </li>
+                                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                               th:href="@{/login/credentials/types(type=${T(me.maodud.vault.enums.Type).CARD.name()})}"
+                                               th:text="${#strings.capitalize(#strings.toLowerCase(T(me.maodud.vault.enums.Type).CARD))}">CARD</a>
+                                        </li>
+                                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                               th:href="@{/login/credentials/types(type=${T(me.maodud.vault.enums.Type).IDENTITY.name()})}"
+                                               th:text="${#strings.capitalize(#strings.toLowerCase(T(me.maodud.vault.enums.Type).IDENTITY))}">IDENTITY</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="border-top my-3"></li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#folder-collapse" aria-expanded="true">
+                                    Folder
+                                </button>
+                                <div class="collapse show" id="folder-collapse">
+                                    <ul th:each="folder: ${folders}" class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="#" th:href="@{'/login/credentials/folder?id=' + ${folder.id}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" th:text="${folder.name}">Login</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-7 col-lg-8">
                 <div class="mb-4 align-items-center d-flex justify-content-between">
                     <div>
-                        <h4 class="mb-0 d-flex align-items-center">All Account Credentials</h4>
+                        <h4 class="mb-0 d-flex align-items-center">All Shields</h4>
                     </div>
                     <div class="flex-shrink-0">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -68,7 +112,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Folder</th>
-                        <th>Category</th>
+                        <th>Type</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -76,7 +120,7 @@
                     <tr th:each="credential : ${credentials}">
                         <td th:text="${credential.name}"></td>
                         <td th:text="${credential.folder.name}"></td>
-                        <td></td>
+                        <td th:text="${credential.type}"></td>
                         <td class="d-md-flex justify-content-md-end">
                             <a class="btn btn-primary btn-sm me-2" th:href="@{/login/credentials/edit/{id}(id=${credential.id})}">Edit</a>
                             <form th:action="@{/login/credentials/delete/{id}(id=${credential.id})}" method="post">
@@ -89,53 +133,66 @@
                 </table>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                        <form class="modal-content" th:action="@{/login/credentials}" method="post">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form th:action="@{/login/credentials}" method="post">
-                                    <div class="col-12">
-<!--                                        <input type="hidden" name="id" th:value="${credential.id}" th:if="*{credential.id != null}" />-->
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label">Type Of Item</label>
+                                        <select name="type" class="form-select" id="menuType">
+                                            <option th:value="${T(me.maodud.vault.enums.Type).LOGIN}">Login</option>
+                                            <option th:value="${T(me.maodud.vault.enums.Type).CARD}">Card</option>
+                                            <option th:value="${T(me.maodud.vault.enums.Type).IDENTITY}">Identity</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <!--<input type="hidden" name="id" th:value="${credential.id}" th:if="*{credential.id != null}" />-->
                                         <label class="form-label">Name</label>
                                         <input type="text" class="form-control" name="name" required />
                                     </div>
 
-                                    <div class="col-12">
-                                        <label class="form-label">Username</label>
-                                        <input type="text" class="form-control" name="username" required />
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label">Password</label>
-                                        <input type="text" class="form-control" name="password" required />
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label">URL</label>
-                                        <input type="text" class="form-control" name="url" required />
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label">Notes</label>
-                                        <input type="text" class="form-control" name="notes" />
-                                    </div>
-
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <label class="form-label">Folder</label>
                                         <select class="form-control" name="folder.id">
                                             <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
                                         </select>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control" name="username" required />
+                                    </div>
+
+                                    <div class="col-6">
+                                        <label class="form-label">Password</label>
+                                        <input type="text" class="form-control" name="password" required />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <label class="form-label">URL</label>
+                                        <input type="text" class="form-control" name="url" required />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <label class="form-label">Notes</label>
+                                        <textarea class="form-control" name="notes" cols="5"></textarea>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -153,8 +210,8 @@
         </ul>
     </footer>
 </div>
-</body>
 <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 <script th:src="@{/js/checkout.js}" ></script>
+<script th:src="@{/js/sidebars.js}" ></script>
 </body>
 </html>

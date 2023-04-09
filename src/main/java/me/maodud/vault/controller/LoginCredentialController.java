@@ -1,18 +1,17 @@
 package me.maodud.vault.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.maodud.vault.model.Folder;
+import me.maodud.vault.enums.Type;
 import me.maodud.vault.model.LoginCredential;
 import me.maodud.vault.service.FolderService;
 import me.maodud.vault.service.LoginCredentialService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/login/credentials")
@@ -25,7 +24,8 @@ public class LoginCredentialController {
     public String listLoginCredential(Model model) {
         List<LoginCredential> credentials = service.getAllCredentials();
         model.addAttribute("credentials", credentials);
-        return "login-credential/list";
+        model.addAttribute("folders", folderService.getAllFolderList());
+        return "welcome";
     }
 
     @GetMapping("/new")
@@ -48,6 +48,27 @@ public class LoginCredentialController {
             System.out.println("not created. cause: " + e.getMessage());
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/folder")
+    public String getCredentialByFolder(@RequestParam("id") Long id, Model model) {
+        List<LoginCredential> credentialsByFolderId = service.getCredentialsByFolderId(id);
+        model.addAttribute("credentials", credentialsByFolderId);
+        model.addAttribute("folders", folderService.getAllFolderList());
+        return "welcome";
+    }
+
+    @GetMapping("/types")
+    public String getCredentialByType(@RequestParam("type") Type type, Model model) {
+        List<LoginCredential> credentialsByType = service.getCredentialsByType(type);
+        model.addAttribute("credentials", credentialsByType);
+        model.addAttribute("folders", folderService.getAllFolderList());
+        return "welcome";
+    }
+
+    @ModelAttribute("typeMap")
+    public Map<String, String> getTypeMap() {
+        return Type.getTypeMap();
     }
 
 }
