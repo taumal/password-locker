@@ -32,6 +32,6 @@
 }
 
 .error-page a:hover {
-    background: #ffffff;
-    color: #002795;
+    background: #002795;
+    color: #fff;
 }
