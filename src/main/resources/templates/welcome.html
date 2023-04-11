@@ -102,7 +102,7 @@
                         <h4 class="mb-0 d-flex align-items-center">All Shields</h4>
                     </div>
                     <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entryModal">
                             New Item
                         </button>
                     </div>
@@ -120,7 +120,7 @@
                     <tr th:each="credential : ${credentials}">
                         <td th:text="${credential.name}"></td>
                         <td th:text="${credential.folder.name}"></td>
-                        <td th:text="${credential.type}"></td>
+                        <td th:text="${#strings.capitalize(#strings.toLowerCase(credential.type))}"></td>
                         <td class="d-md-flex justify-content-md-end">
                             <a class="btn btn-primary btn-sm me-2" th:href="@{/login/credentials/edit/{id}(id=${credential.id})}">Edit</a>
                             <form th:action="@{/login/credentials/delete/{id}(id=${credential.id})}" method="post">
@@ -131,75 +131,139 @@
                     </tr>
                     </tbody>
                 </table>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                        <form class="modal-content" th:action="@{/login/credentials}" method="post">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row mb-3">
-                                    <div class="col-6">
-                                        <label class="form-label">Type Of Item</label>
-                                        <select name="type" class="form-select" id="menuType">
-                                            <option th:value="${T(me.maodud.vault.enums.Type).LOGIN}">Login</option>
-                                            <option th:value="${T(me.maodud.vault.enums.Type).CARD}">Card</option>
-                                            <option th:value="${T(me.maodud.vault.enums.Type).IDENTITY}">Identity</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-6">
-                                        <!--<input type="hidden" name="id" th:value="${credential.id}" th:if="*{credential.id != null}" />-->
-                                        <label class="form-label">Name</label>
-                                        <input type="text" class="form-control" name="name" required />
-                                    </div>
-
-                                    <div class="col-6">
-                                        <label class="form-label">Folder</label>
-                                        <select class="form-control" name="folder.id">
-                                            <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-6">
-                                        <label class="form-label">Username</label>
-                                        <input type="text" class="form-control" name="username" required />
-                                    </div>
-
-                                    <div class="col-6">
-                                        <label class="form-label">Password</label>
-                                        <input type="text" class="form-control" name="password" required />
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-12">
-                                        <label class="form-label">URL</label>
-                                        <input type="text" class="form-control" name="url" required />
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-12">
-                                        <label class="form-label">Notes</label>
-                                        <textarea class="form-control" name="notes" cols="5"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
 
         <hr class="my-4">
     </main>
+
+    <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <form class="modal-content" th:action="@{/login/credentials}" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label">Type Of Item</label>
+                            <select name="type" class="form-select" id="menuType">
+                                <option th:value="${T(me.maodud.vault.enums.Type).LOGIN}">Login</option>
+                                <option th:value="${T(me.maodud.vault.enums.Type).CARD}">Card</option>
+                                <option th:value="${T(me.maodud.vault.enums.Type).IDENTITY}">Identity</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <!--<input type="hidden" name="id" th:value="${credential.id}" th:if="*{credential.id != null}" />-->
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required />
+                        </div>
+
+                        <div class="col-6">
+                            <label class="form-label">Folder</label>
+                            <select class="form-control" name="folder.id">
+                                <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" required />
+                        </div>
+
+                        <div class="col-6">
+                            <label class="form-label">Password</label>
+                            <input type="text" class="form-control" name="password" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label">URL</label>
+                            <input type="text" class="form-control" name="url" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" name="notes" cols="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <form class="modal-content" th:action="@{/login/credentials}" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateModalLabel">Add New Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label">Type Of Item</label>
+                            <select name="type" class="form-select" id="menuType">
+                                <option th:value="${T(me.maodud.vault.enums.Type).LOGIN}">Login</option>
+                                <option th:value="${T(me.maodud.vault.enums.Type).CARD}">Card</option>
+                                <option th:value="${T(me.maodud.vault.enums.Type).IDENTITY}">Identity</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <!--<input type="hidden" name="id" th:value="${credential.id}" th:if="*{credential.id != null}" />-->
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required />
+                        </div>
+
+                        <div class="col-6">
+                            <label class="form-label">Folder</label>
+                            <select class="form-control" name="folder.id">
+                                <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" required />
+                        </div>
+
+                        <div class="col-6">
+                            <label class="form-label">Password</label>
+                            <input type="text" class="form-control" name="password" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label">URL</label>
+                            <input type="text" class="form-control" name="url" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" name="notes" cols="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <footer class="my-5 pt-5 text-body-secondary text-center text-small">
         <p class="mb-1">&copy; 2017–2023 Company Name</p>
