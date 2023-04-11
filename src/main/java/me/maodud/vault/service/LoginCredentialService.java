@@ -54,4 +54,8 @@ public class LoginCredentialService {
         Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new ResourceNotFoundException("Folder not found"));
         return repository.findByFolder(folder);
     }
+
+    public List<LoginCredential> saveAllCredentials(List<LoginCredential> credentials) {
+        return repository.saveAll(credentials);
+    }
 }
