@@ -16,6 +16,15 @@ spring:
   devtools:
     restart:
       enabled: true
+  thymeleaf: # Thymeleaf
+    cache: false
+    mode: HTML5
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
   web:
     resources:
       static-locations: file:src/main/resources/static/,file:src/main/resources/templates/
+      cache:
+        period: 0
+server:
+  port: 8085
