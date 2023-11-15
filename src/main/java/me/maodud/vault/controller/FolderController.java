@@ -6,6 +6,7 @@ import me.maodud.vault.service.FolderService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,15 @@ public class FolderController {
         List<Folder> folderList = folderService.getAllFolderList();
         model.addAttribute("folderList", folderList);
         return "folder/list";
+    }
+
+    @GetMapping("/find-by-id/{id}")
+    @ResponseBody
+    public ModelMap getFolderList(@PathVariable("id") Long id) {
+        Folder folder = folderService.getFolderById(id);
+        ModelMap map = new ModelMap();
+        map.put("folder", folder);
+        return map;
     }
 
     @GetMapping("/new")
@@ -50,7 +60,7 @@ public class FolderController {
         } catch (Exception e) {
             System.out.println("not created. cause: " + e.getMessage());
         }
-        return "redirect:/folders";
+        return "redirect:/";
     }
 
     @DeleteMapping("/{id}")

@@ -14,15 +14,24 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/login/credentials")
+@RequestMapping("/shields")
 @RequiredArgsConstructor
 public class LoginCredentialController {
     private final LoginCredentialService service;
     private final FolderService folderService;
 
     @GetMapping("")
-    public String listLoginCredential(Model model) {
-        List<LoginCredential> credentials = service.getAllCredentials();
+    public String listLoginCredential(Model model, @RequestParam(required = false) Type type, @RequestParam(required = false) Long folder) {
+        List<LoginCredential> credentials;
+
+        if (type != null ) {
+            credentials = service.getCredentialsByType(type);
+        } else if (folder != null && folder > 0) {
+            credentials = service.getCredentialsByFolderId(folder);
+        } else {
+            credentials = service.getAllCredentials();
+        }
+
         model.addAttribute("credentials", credentials);
         model.addAttribute("folders", folderService.getAllFolderList());
         return "welcome";

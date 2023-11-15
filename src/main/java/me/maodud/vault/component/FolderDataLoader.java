@@ -12,8 +12,7 @@ public class FolderDataLoader implements CommandLineRunner {
     private final FolderRepository repository;
     @Override
     public void run(String... args) throws Exception {
-        Folder folder = new Folder();
-        folder.setName("No Folder");
+        Folder folder = new Folder(1L, "No Folder");
         repository.save(folder);
     }
 }

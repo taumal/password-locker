@@ -58,4 +58,9 @@ public class LoginCredentialService {
     public List<LoginCredential> saveAllCredentials(List<LoginCredential> credentials) {
         return repository.saveAll(credentials);
     }
+
+    public List<LoginCredential> getCredentialsByTypeAndFolder(Type type, Long folderId) {
+        Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new ResourceNotFoundException("Folder not found"));
+        return repository.findByTypeAndFolder(type, folder);
+    }
 }

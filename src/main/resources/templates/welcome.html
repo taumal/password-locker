@@ -8,6 +8,7 @@
     <link th:href="@{/css/checkout.css}" rel="stylesheet" >
     <link th:href="@{/css/sidebars.css}" rel="stylesheet" >
     <link th:href="@{/css/brand.css}" rel="stylesheet" >
+    <link th:href="@{/css/bootstrap-icons.css}" rel="stylesheet" >
     <script th:src="@{/js/jquery.min.js}" ></script>
 </head>
 <body class="bg-body-tertiary">
@@ -23,7 +24,7 @@
                     </a>
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="#" class="nav-link px-2 link-secondary" th:href="@{/login/credentials}">Shields</a></li>
+                        <li><a href="#" class="nav-link px-2 link-secondary" th:href="@{/shields}">Shields</a></li>
                         <li><a href="#" class="nav-link px-2 link-body-emphasis" th:href="@{/tools}">Tools</a></li>
                     </ul>
 
@@ -65,7 +66,7 @@
                                 </button>
                                 <div class="collapse show" id="vault-collapse">
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" th:href="@{/login/credentials}">My Shields</a></li>
+                                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" th:href="@{/shields}">My Shields</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -77,15 +78,15 @@
                                 <div class="collapse show" id="types-collapse">
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                               th:href="@{/login/credentials/types(type=${T(me.maodud.vault.enums.Type).LOGIN.name()})}"
+                                               th:href="@{/shields(type=${T(me.maodud.vault.enums.Type).LOGIN.name()})}"
                                                th:text="${#strings.capitalize(#strings.toLowerCase(T(me.maodud.vault.enums.Type).LOGIN))}">Login</a>
                                         </li>
                                         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                               th:href="@{/login/credentials/types(type=${T(me.maodud.vault.enums.Type).CARD.name()})}"
+                                               th:href="@{/shields(type=${T(me.maodud.vault.enums.Type).CARD.name()})}"
                                                th:text="${#strings.capitalize(#strings.toLowerCase(T(me.maodud.vault.enums.Type).CARD))}">CARD</a>
                                         </li>
                                         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                               th:href="@{/login/credentials/types(type=${T(me.maodud.vault.enums.Type).IDENTITY.name()})}"
+                                               th:href="@{/shields(type=${T(me.maodud.vault.enums.Type).IDENTITY.name()})}"
                                                th:text="${#strings.capitalize(#strings.toLowerCase(T(me.maodud.vault.enums.Type).IDENTITY))}">IDENTITY</a>
                                         </li>
                                     </ul>
@@ -97,8 +98,15 @@
                                     Folder
                                 </button>
                                 <div class="collapse show" id="folder-collapse">
-                                    <ul th:each="folder: ${folders}" class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        <li><a href="#" th:href="@{'/login/credentials/folder?id=' + ${folder.id}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" th:text="${folder.name}">Login</a></li>
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <th:block th:each="folder: ${folders}" >
+                                            <li class="d-flex align-items-center justify-content-between">
+                                                <a href="#" th:href="@{'/shields?folder=' + ${folder.id}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" th:text="${folder.name}">Login</a>
+                                                <a id="folderEdit" class="link-body-emphasis text-decoration-none"
+                                                   th:href="@{/folders/find-by-id/{id}(id=${folder.id})}"
+                                                   th:if="${folder.id != 1}"><i class="bi bi-pencil-square"></i></a>
+                                            </li>
+                                        </th:block>
                                     </ul>
                                 </div>
                             </li>
@@ -112,9 +120,15 @@
                         <h4 class="mb-0 d-flex align-items-center">All Shields</h4>
                     </div>
                     <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entryModal">
-                            New Item
-                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                New
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#typeEntryModal">Type</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#folderEntryModal">Folder</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <table class="table table-hover">
@@ -147,11 +161,11 @@
         <hr class="my-4">
     </main>
 
-    <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="typeEntryModal" tabindex="-1" aria-labelledby="typeEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <form class="modal-content" th:action="@{/login/credentials}" method="post">
+            <form class="modal-content" th:action="@{/shields}" method="post">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                    <h1 class="modal-title fs-5" id="typeEntryModalLabel">Add New Type</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -210,11 +224,11 @@
         </div>
     </div>
 
-    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal fade" id="typeUpdateModal" tabindex="-1" aria-labelledby="typeUpdateModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <form class="modal-content" th:action="@{/login/credentials}" method="post">
+            <form class="modal-content" th:action="@{/shields}" method="post">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="updateModalLabel">Add New Item</h1>
+                    <h1 class="modal-title fs-5" id="typeUpdateModalLabel">Update Type</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -237,7 +251,7 @@
 
                         <div class="col-6">
                             <label class="form-label">Folder</label>
-                            <select class="form-control" name="folder.id">
+                            <select id="folder" class="form-control" name="folder.id">
                                 <option th:each="folder : ${folders}" th:value="${folder.id}" th:text="${folder.name}"></option>
                             </select>
                         </div>
@@ -256,19 +270,66 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <label class="form-label">URL</label>
-                            <input type="text" class="form-control" name="url" required />
+                            <input id="url" type="text" class="form-control" name="url" required />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
                             <label class="form-label">Notes</label>
-                            <textarea class="form-control" name="notes" cols="5"></textarea>
+                            <textarea id="notes" class="form-control" name="notes" cols="5"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="folderEntryModal" tabindex="-1" aria-labelledby="folderEntryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <form class="modal-content" th:action="@{/folders}" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="folderEntryModalLabel">Add New Folder</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label">Folder Name</label>
+                            <input type="text" class="form-control" name="name" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="folderUpdateModal" tabindex="-1" aria-labelledby="folderUpdateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <form class="modal-content" th:action="@{/folders}" method="post">
+                <input type="hidden" name="id" id="folderId" />
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="folderUpdateModalLabel">Update Folder</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label">Folder Name</label>
+                            <input id="folderName" type="text" class="form-control" name="name" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>

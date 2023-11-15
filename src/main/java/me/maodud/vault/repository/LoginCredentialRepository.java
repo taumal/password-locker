@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface LoginCredentialRepository  extends JpaRepository<LoginCredential, Long> {
     List<LoginCredential> findByFolder(Folder folder);
-    List<LoginCredential> findByType(Type folder);
+    List<LoginCredential> findByType(Type type);
+    List<LoginCredential> findByTypeAndFolder(Type type, Folder folder);
 }
