@@ -10,6 +10,11 @@
     <link th:href="@{/css/brand.css}" rel="stylesheet" >
     <link th:href="@{/css/bootstrap-icons.css}" rel="stylesheet" >
     <script th:src="@{/js/jquery.min.js}" ></script>
+    <style>
+        #del-item::before {
+            content: ' ';
+        }
+    </style>
 </head>
 <body class="bg-body-tertiary">
 
@@ -102,13 +107,16 @@
                                         <th:block th:each="folder: ${folders}" >
                                             <li class="d-flex align-items-center justify-content-between">
                                                 <a href="#" th:href="@{'/shields?folder=' + ${folder.id}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" th:text="${folder.name}">Login</a>
-                                                <a id="folderEdit" class="link-body-emphasis text-decoration-none"
-                                                   th:href="@{/folders/find-by-id/{id}(id=${folder.id})}"
+                                                <a th:id="|${folder.id}|" class="link-body-emphasis text-decoration-none" onclick="folderEdit(this)"
                                                    th:if="${folder.id != 1}"><i class="bi bi-pencil-square"></i></a>
                                             </li>
                                         </th:block>
                                     </ul>
                                 </div>
+                            </li>
+                            <li class="border-top my-3"></li>
+                            <li class="mb-1">
+                                <a id="del-item" class="btn btn-toggle d-inline-flex align-items-center rounded border-0">Deleted Item</a>
                             </li>
                         </ul>
                     </div>
@@ -146,8 +154,8 @@
                         <td th:text="${credential.folder.name}"></td>
                         <td th:text="${#strings.capitalize(#strings.toLowerCase(credential.type))}"></td>
                         <td class="d-md-flex justify-content-md-end">
-                            <a id="btnEdit" class="btn btn-primary btn-sm me-2" th:href="@{/v1/api/login/credentials/{id}(id=${credential.id})}">Edit</a>
-                            <form th:action="@{/login/credentials/delete/{id}(id=${credential.id})}" method="post">
+                            <a th:id="|${credential.id}|" class="btn btn-primary btn-sm me-2" onclick="shieldEdit(this)">Edit</a>
+                            <form th:action="@{/shields/delete/{id}(id=${credential.id})}" method="post">
                                 <input type="hidden" name="_method" value="DELETE" />
                                 <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>

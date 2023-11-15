@@ -26,13 +26,10 @@ public class FolderController {
         return "folder/list";
     }
 
-    @GetMapping("/find-by-id/{id}")
+    @GetMapping("/json/by-id/{id}")
     @ResponseBody
-    public ModelMap getFolderList(@PathVariable("id") Long id) {
-        Folder folder = folderService.getFolderById(id);
-        ModelMap map = new ModelMap();
-        map.put("folder", folder);
-        return map;
+    public Folder getFolderJson(@PathVariable("id") Long id) {
+        return folderService.getFolderById(id);
     }
 
     @GetMapping("/new")

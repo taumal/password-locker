@@ -2,11 +2,13 @@ package me.maodud.vault.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.maodud.vault.enums.Type;
+import me.maodud.vault.model.Folder;
 import me.maodud.vault.model.LoginCredential;
 import me.maodud.vault.service.FolderService;
 import me.maodud.vault.service.LoginCredentialService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,6 +80,12 @@ public class LoginCredentialController {
     @ModelAttribute("typeMap")
     public Map<String, String> getTypeMap() {
         return Type.getTypeMap();
+    }
+
+    @GetMapping("/json/by-id/{id}")
+    @ResponseBody
+    public LoginCredential getLoginCredentialJson(@PathVariable("id") Long id) {
+        return service.getCredentialById(id);
     }
 
 }
