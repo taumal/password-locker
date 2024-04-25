@@ -3,7 +3,7 @@ spring:
     url: jdbc:mariadb://localhost:3306/pass_vault
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password:
+    password: T@umal1234
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MariaDBDialect
@@ -26,5 +26,16 @@ spring:
       static-locations: file:src/main/resources/static/,file:src/main/resources/templates/
       cache:
         period: 0
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: ed4dcb236ed30b
+    password: 46e9c94f37a579
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 server:
   port: 8085
