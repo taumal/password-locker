@@ -104,6 +104,12 @@ public class RegistrationController {
     }
 
     public void authWithoutPassword(User user) {
+//        List<Privilege> privileges = user.getRoles().stream().map(Role::getPrivileges)
+//                .flatMap(Collection::stream).distinct().collect(Collectors.toList());
+//        List<GrantedAuthority> authorities = privileges.stream()
+//                .map(p -> new SimpleGrantedAuthority(p.getName()))
+//                .collect(Collectors.toList());
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
