@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="${message}">Error Message</h1>
+<a th:href="@{/registration}"
+   th:text="#{label.form.loginSignUp}">signup</a>
+
+<div th:if="${expired}">
+    <br/>
+    <h1 th:utext="#{label.form.resendRegistrationToken}">resend</h1>
+    <button onclick="resendToken()">resend</button>
+</div>
+
+</body>
+</html>
