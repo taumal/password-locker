@@ -1,19 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
+    <link th:href="@{/css/error.css}" rel="stylesheet" >
 </head>
 <body>
-<h1 th:text="${message}">Error Message</h1>
-<a th:href="@{/registration}"
-   th:text="#{label.form.loginSignUp}">signup</a>
-
-<div th:if="${expired}">
-    <br/>
-    <h1 th:utext="#{label.form.resendRegistrationToken}">resend</h1>
-    <button onclick="resendToken()">resend</button>
+<div class="container error-container text-center">
+    <div class="error-page">
+        <!-- Alert for Invalid Token -->
+        <div class="text-center" role="alert">
+            <h2 th:text="${message}">Error Message</h2>
+            <h3 th:if="${expired}" th:utext="'Or ' + #{label.form.resendRegistrationToken}">Error Message</h3>
+            <p>
+                <th:block th:if="${expired}">
+                    <button class="btn"
+                            onclick="resendToken()">Resend</button>
+                </th:block>
+                <th:block th:unless="${expired}">
+                    Please sign up again.
+                    <a th:href="@{/registration}"
+                       th:text="#{label.form.loginSignUp}"
+                       class="btn">Sign Up</a>
+                </th:block>
+            </p>
+        </div>
+    </div>
 </div>
-
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 </body>
 </html>

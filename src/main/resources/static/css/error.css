@@ -13,6 +13,20 @@
     margin-bottom: 0;
 }
 
+.error-page h2 {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #002795;
+    margin-bottom: 0;
+}
+
+.error-page h3 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #002795;
+    margin-bottom: 0;
+}
+
 .error-page p {
     font-size: 1.5rem;
     font-weight: 300;
@@ -20,7 +34,7 @@
     margin-bottom: 4rem;
 }
 
-.error-page a {
+.error-page .btn {
     font-size: 1.25rem;
     font-weight: 700;
     color: #002795;
@@ -31,7 +45,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.error-page a:hover {
+.error-page .btn:hover {
     background: #002795;
     color: #fff;
 }

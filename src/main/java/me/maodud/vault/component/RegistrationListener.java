@@ -37,5 +37,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String subject = "Registration Confirmation";
         String confirmationUrl = event.getAppUrl() + "/verify-email?token=" + token;
         emailService.sendMail(recipientName, recipientAddress, subject, token, confirmationUrl);
+        System.out.println("Email Send Successfully...");
     }
 }

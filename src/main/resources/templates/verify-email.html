@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Vaults</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
+    <link th:href="@{/css/checkout.css}" rel="stylesheet" >
+    <link th:href="@{/css/sidebars.css}" rel="stylesheet" >
+    <link th:href="@{/css/brand.css}" rel="stylesheet" >
+    <link th:href="@{/css/bootstrap-icons.css}" rel="stylesheet" >
+    <script th:src="@{/js/jquery.min.js}" ></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .email-icon {
+            font-size: 48px;
+            color: #3498db;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
+
+<div class="container">
+    <i class="bi bi-envelope email-icon"></i>
+    <h1>Thank You for Registering!</h1>
+    <p>An email has been sent to your address with a verification link. Please check your email and click on the link to verify your account.</p>
+    <a th:href="@{/}" class="btn">Back to Homepage</a>
+</div>
 
 </body>
 </html>

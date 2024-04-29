@@ -79,7 +79,7 @@ public class RegistrationController {
 
         User user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
-        log.info("Expired In: " + (verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()));
+        log.warn("Expired In: " + ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) / (24 * 60 * 60 * 1000)) + " Days");
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             String message = messages.getMessage("auth.message.expired", null, locale);
             return "redirect:/registration/bad-user?lang=" + locale.getLanguage()+ "&message=" + message + "&expired=" + true + "&token=" + token;
